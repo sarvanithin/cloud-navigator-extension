@@ -294,7 +294,7 @@ Now, engage with the user based on the current phase of their deployment journey
 
     const body = {
       model: 'claude-3-haiku-20240307',
-      max_tokens: 1024,
+      max_tokens: 4096,
       system: systemContent,
       messages
     };
@@ -605,7 +605,8 @@ Use these real deep-link patterns:
 - Firebase Hosting:          https://console.firebase.google.com/
 - GitHub Actions:            https://github.com/settings/tokens/new
 
-Return ONLY a JSON array (no markdown, no extra text) with 5-8 steps in this EXACT shape:
+Return ONLY a JSON array — no markdown, no prose, no text before or after.
+Use 5-6 steps maximum. Keep each instruction under 12 words. Exact shape:
 
 [
   {
