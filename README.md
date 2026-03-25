@@ -329,12 +329,6 @@ Found a bug? Have a suggestion? Please [open an issue](https://github.com/your-u
 
 MIT License - See LICENSE file for details
 
-## Support
-
-- 📧 Email: support@cloudnavigator.dev
-- 🐦 Twitter: [@cloudnavigator](https://twitter.com/cloudnavigator)
-- 💬 Discord: [Join our community](https://discord.gg/cloudnavigator)
-
 ---
 
 Made with ☁️ and ❤️ to help developers navigate the cloud
