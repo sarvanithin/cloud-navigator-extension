@@ -1,0 +1,408 @@
+/* Cloud Navigator Content Script Styles */
+
+:root {
+  --cn-primary: #667eea;
+  --cn-primary-dark: #764ba2;
+  --cn-accent: #ff6b35;
+  --cn-success: #22c55e;
+  --cn-text-primary: #1a1a2e;
+  --cn-text-secondary: #64748b;
+  --cn-bg-light: #f8faff;
+  --cn-border: #e2e8f0;
+  --cn-shadow: 0 8px 32px rgba(102,126,234,0.18);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CLOUD NAVIGATOR  –  In-page guidance overlay
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Sidebar shell ─────────────────────────────────────────── */
+.cloud-navigator-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 340px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -6px 0 32px rgba(102,126,234,0.22);
+  z-index: 2147483640;
+  overflow-y: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  color: var(--cn-text-primary);
+  transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.cloud-navigator-sidebar.cn-hidden {
+  transform: translateX(105%);
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.cn-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, var(--cn-primary) 0%, var(--cn-primary-dark) 100%);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.cn-logo { font-size: 20px; }
+.cn-title { font-weight: 700; font-size: 15px; flex: 1; }
+
+.cn-close-btn {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.cn-close-btn:hover { background: rgba(255,255,255,0.35); }
+
+/* ── Progress bar ─────────────────────────────────────────── */
+.cn-progress-bar-wrap {
+  height: 6px;
+  background: #e2e8f0;
+  position: relative;
+}
+.cn-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cn-primary), var(--cn-accent));
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.cn-progress-label {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  font-size: 11px;
+  color: var(--cn-text-secondary);
+  white-space: nowrap;
+}
+
+/* ── Body ─────────────────────────────────────────────────── */
+.cn-sidebar-body {
+  padding: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.cn-idle {
+  color: var(--cn-text-secondary);
+  text-align: center;
+  margin-top: 40px;
+  font-size: 13px;
+}
+
+/* ── Step card ────────────────────────────────────────────── */
+.cn-step-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--cn-primary), var(--cn-primary-dark));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.cn-step-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cn-text-primary);
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.cn-step-desc {
+  font-size: 12px;
+  color: var(--cn-text-secondary);
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+
+/* ── Instructions list ────────────────────────────────────── */
+.cn-instructions-list {
+  margin: 0 0 14px;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cn-instruction {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--cn-bg-light);
+  border-radius: 8px;
+  border-left: 3px solid var(--cn-primary);
+  line-height: 1.45;
+  counter-increment: inst;
+}
+
+.cn-instructions-list {
+  counter-reset: inst;
+}
+
+.cn-instruction::before {
+  content: counter(inst);
+  background: var(--cn-primary);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Claude hint ──────────────────────────────────────────── */
+.cn-claude-hint {
+  background: linear-gradient(135deg, #fff7ed, #fff3e0);
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #c2410c;
+  font-weight: 600;
+  margin-bottom: 14px;
+  line-height: 1.45;
+}
+
+/* ── Done button ──────────────────────────────────────────── */
+.cn-done-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--cn-success), #16a34a);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cn-done-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.cn-done-btn:active { transform: scale(0.98); }
+
+.cn-est-time {
+  font-size: 11px;
+  color: var(--cn-text-secondary);
+  text-align: center;
+}
+
+/* ── URL awareness banner ─────────────────────────────────── */
+.cn-url-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.cn-url-correct {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #166534;
+  font-weight: 600;
+}
+
+.cn-url-wrong {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #92400e;
+}
+
+.cn-url-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+.cn-url-wrong-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cn-url-wrong-text strong { font-size: 13px; color: #c2410c; }
+.cn-url-wrong-text span { color: #92400e; }
+
+.cn-url-code {
+  display: inline-block;
+  background: rgba(0,0,0,0.06);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: monospace;
+  font-size: 10px;
+  word-break: break-all;
+  margin-top: 3px;
+  color: #7c3aed;
+}
+
+/* ── "Take me there" navigation button ───────────────────── */
+.cn-navigate-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(124,58,237,0.35);
+}
+.cn-navigate-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(124,58,237,0.45); }
+.cn-navigate-btn:active { transform: scale(0.98); }
+
+.cn-url-hint {
+  font-size: 12px;
+  color: var(--cn-text-secondary);
+  background: var(--cn-bg-light);
+  border-radius: 8px;
+  padding: 10px 12px;
+  line-height: 1.55;
+  border-left: 3px solid var(--cn-primary);
+  margin: 0;
+}
+
+/* ── Completion state ─────────────────────────────────────── */
+.cn-complete {
+  text-align: center;
+  padding: 30px 10px;
+}
+.cn-complete-icon { font-size: 48px; margin-bottom: 12px; }
+.cn-complete h3 { font-size: 18px; color: var(--cn-success); margin: 0 0 8px; }
+.cn-complete p { color: var(--cn-text-secondary); font-size: 13px; }
+
+/* ── Floating bubble ──────────────────────────────────────── */
+.cloud-navigator-bubble {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cn-primary) 0%, var(--cn-primary-dark) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(102,126,234,0.45);
+  z-index: 2147483639;
+  transition: transform 0.2s, box-shadow 0.2s;
+  user-select: none;
+}
+.cloud-navigator-bubble:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 24px rgba(102,126,234,0.55);
+}
+
+/* ── Pulsing element highlight ────────────────────────────── */
+.cn-highlight-pulse {
+  outline: 3px solid #f59e0b !important;
+  outline-offset: 3px !important;
+  box-shadow:
+    0 0 0 6px rgba(245,158,11,0.25),
+    0 0 0 12px rgba(245,158,11,0.10) !important;
+  animation: cn-pulse 1.4s ease-in-out infinite;
+  border-radius: 4px;
+  position: relative;
+  z-index: 2147483600 !important;
+}
+
+@keyframes cn-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 6px rgba(245,158,11,0.25),
+      0 0 0 12px rgba(245,158,11,0.10);
+  }
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(245,158,11,0.40),
+      0 0 0 18px rgba(245,158,11,0.15);
+  }
+}
+
+/* ── Floating tooltip ─────────────────────────────────────── */
+#cn-tooltip {
+  position: absolute;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 2147483641;
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: cn-bounce-in 0.2s ease;
+}
+
+#cn-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1e293b;
+}
+
+.cn-tooltip-arrow { font-size: 16px; }
+
+@keyframes cn-bounce-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Legacy highlight class (keep for compat) ─────────────── */
+.cloud-navigator-highlight-element { }
+@keyframes glow-pulse { }
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+.cloud-navigator-sidebar::-webkit-scrollbar { width: 5px; }
+.cloud-navigator-sidebar::-webkit-scrollbar-track { background: transparent; }
+.cloud-navigator-sidebar::-webkit-scrollbar-thumb { background: var(--cn-border); border-radius: 4px; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cloud-navigator-sidebar { width: 100%; }
+}
